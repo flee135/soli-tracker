@@ -570,7 +570,7 @@ var Names = [
 	/*Water Temple*/"Compass", "Map", "Cracked", "Torches", "*Near BK", "BK", "*S Base", "Block", "*Pillar", "Central P", "*Plats", "D Link", "*River", "River", "Dragon", "Morpha",
 	/*Ganon's Castle*/"Scrub", "Scrub", "Scrub", "Scrub", "Light 1", "Light 2", "Light 3", "Light 4", "Light 5", "Light 6", "Light Clr", "Light Lul", "Spirit 1", "Spirit 2", "Forest", "Water 1", "Water 2", "Shadow 1", "Shadow 2", "BK",
 	/*Gerudo Training Grounds*/"Lobby", "Lobby", "Stalfos", "Wolfos", "Silvers", "Silvers", "Silvers", "Silvers", "Eyes", "Abv Eyes", "Enemies", "Fire", "R1", "R2", "R3", "Beamos", "L1",  "L2", "L3", "L4", "Final", "Toilet",
-	/*Bottom of the Well*/"Fake L", "Bomb", "Center", "Fake R", "Center", "Bomb back", "Water L", "Coffin", "Water F", "Dead Hand", "Dead Hand", "*Door L", "*Door R", "Locked 1", "Locked 2", "*Locked", "Basement",
+	/*Bottom of the Well*/"Fake L", "Bomb", "Center", "Fake R", "Center", "Bomb back", "Water L", "Coffin", "Water F", "DeadHand", "DeadHand", "*Door L", "*Door R", "Locked 1", "Locked 2", "*Locked", "Basement",
 	/*Songs*/"Zelda", "Malon", "Saria", "Windmill", "Grave", "Crater", "Ad. SFM", "Colossus", "Ice", "1 Med", "3 Med", "OoT Song"
 ];
 var alwaysHints = ["tokens_30", "tokens_40", "tokens_50", "oot", "trade_quest", "frogs_2", "theater_skull"];
