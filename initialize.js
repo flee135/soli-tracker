@@ -900,13 +900,13 @@ var Names = [
 	/*Fortress*/"Card", "*Fort", "Roof", "1000", "1500", "*Target", 
 	/*Jabu Jabu*/"*Vines", "Scrub", "Map", "Compass", "Rang", "*B4 Octo", "*B4 Octo", "*B4 Boss", "Barinade",
 	/*Forest Temple*/"First", "*First", "*Lobby", "Stalfos", "C Plat", "*C Plat", "C Bubble", "C Well", "Push Eye", "BK", "Flrmaster", "*Arch", "Red", "Bow", "Blue", "Falling", "Basement", "*Base", "Phantom",
-	/*Fire Temple*/"Near Boss", "*Hammer", "Hammer", "Hammer", "Lav Left", "*SoT", "Lav Right", "Volvagia", "Low Cell", "*Maze", "Low Cell", "Map", "High Cell", "Shortcut", "*Pierre", "*Pierre", "Pierre", "Compass", "HighGoron", "Hammer",
+	/*Fire Temple*/"Near Boss", "*Hammer", "Hammer", "Hammer", "Lav Left", "*SoT", "Lav Right", "Volvagia", "Low Cell", "*Maze", "Low Cell", "Map", "High Cell", "Shortcut", "*Pierre", "*Pierre", "Pierre", "Compass", "HiGoron", "Hammer",
 	/*Spirit Temple*/"Ch. Left", "Ch. Right", "*Fence", "Ch. Climb", "*Ch Climb", "Ch. Climb", "Map", "Sun Room", "*B4 Knuck", "Silvers", "Ad. Left", "*SoT", "Ad. Right", "Ad. Climb", "Ad. Climb", "LullaHand", "LullaHigh", "*Main", "4 Armos", "Invisible", "Invisible", "Mirror", "BK", "Tippy Top", "Twinrova",
 	/*Shadow Temple*/"Map", "Hovers", "Gibdos", "Spin Blade", "*Spinning", "Inv Blade", "Inv Blade", "Crusher L", "*Crusher", "Crusher H", "Crusher H", "Redeads", "*Pot", "Pot", "Wind", "Bombable", "Gibdos", "*Boat", "Dins", "Dins", "*3 Pots", "Floor", "Bongo",
 	/*Water Temple*/"Compass", "Map", "Cracked", "Torches", "*Near BK", "BK", "*S Base", "Block", "*Pillar", "Central P", "*Plats", "D Link", "*River", "River", "Dragon", "Morpha",
 	/*Ganon's Castle*/"Scrub", "Scrub", "Scrub", "Scrub", "Light 1", "Light 2", "Light 3", "Light 4", "Light 5", "Light 6", "Light Clr", "Light Lul", "Spirit 1", "Spirit 2", "Forest", "Water 1", "Water 2", "Shadow 1", "Shadow 2", "BK",
 	/*Gerudo Training Grounds*/"Lobby", "Lobby", "Stalfos", "Wolfos", "Silvers", "Silvers", "Silvers", "Silvers", "Eyes", "Abv Eyes", "Enemies", "Fire", "R1", "R2", "R3", "Beamos", "L1",  "L2", "L3", "L4", "Final", "Toilet",
-	/*Bottom of the Well*/"Fake L", "Bomb", "Center", "Fake R", "Center", "Bomb back", "Water L", "Coffin", "Water F", "DeadHand", "DeadHand", "*Door L", "*Door R", "Locked 1", "Locked 2", "*Locked", "Basement",
+	/*Bottom of the Well*/"Fake L", "Bomb", "Center", "Fake R", "Center", "Bomb B", "Water L", "Coffin", "Water F", "DH Inv", "DeadHand", "*Door L", "*Door R", "Locked 1", "Locked 2", "*Locked", "Basement",
 	/*Songs*/"Zelda", "Malon", "Saria", "Windmill", "Grave", "Crater", "Ad. SFM", "Colossus", "Ice", "1 Med", "3 Med", "OoT Song"
 ];
 var alwaysHints = ["tokens_30", "tokens_40", "tokens_50", "oot", "trade_quest", "frogs_2", "theater_skull"];
