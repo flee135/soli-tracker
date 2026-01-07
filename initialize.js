@@ -84,6 +84,7 @@ var dungs_list2 = {"deku":"Deku", "dodongos":"DC", "jabu":"Jabu", "forest_temple
 var dungs_list = ["deku", "dodongos", "jabu", "forest_temple", "fire_temple", "water_temple", "shadow_temple", "spirit_temple", "botw", "ice", "gtg"];
 var dungs_list_short = ["de", "do", "ja", "fo", "fi", "wa", "sh", "sp", "bo", "ic", "gt"];
 var dungs_colors = Array(dungs_list.length).fill("white");
+var dungs_strike = Array(dungs_list.length).fill("none");
 for(let d = 0; d < dungs_list.length; d++) {
 	dungeonToEntrance_ER_dict[dungs_list[d]] = dungs_list[d];
 	entranceToDungeon_ER_dict[dungs_list[d]] = dungs_list[d];
@@ -123,27 +124,362 @@ if (document.getElementById("presets").value == "SGL_2025")
 		
 var hintStones = ["Crater: Hint", "Crater: Gr. Hint", "Trail: Gr. Hint", "Trail: Bigo Hint", "Colossus: Hint", "Dodongos: Hint", "Field: Open Gr. Hint", "Field: Remote Gr. Hint", "Field: Destiny Hint", "Valley: Hint", "Hylia: After Valley Hint", "Hylia: Back Right Hint", "Hylia: Back Left Hint", "Hyrule Castle: First Hint", "Hyrule Castle: Second Hint", "Temple of Time: First Hint", "Temple of Time: Second Hint", "Temple of Time: Third Hint", "Temple of Time: Fourth Hint", "Kakariko: Gr. Hint", "Kokiri: Left Deku Hint", "Kokiri: Right Deku Hint", "Kokiri: Gr. Hint", "Kokiri: LW Hint", "Lost Woods: Br. Hint", "Lost Woods: Gr. Hint", "SFM: Sarias Hint", "SFM: Maze 1 Hint", "SFM: Maze 2 Hint", "River: Gr. Hint", "River: Plateau Hint", "River: By ZD Hint", "Domain: Hint", "Fountain: Jabu Hint", "Fountain: By Fairy Hint", "Goron City: Maze Hint", "Goron City: Medigoron Hint", "Graveyard: Hint", "Hyrule Castle: Storms Hint", "Field: Hammer Hint"];
 
-var checkSummary = ["farores_wind", "slingshot1", "slingshot2", "slingshot3", "boomerang", "scale1", "scale2", "rutos_letter", "bottle1", "bottle2", "bottle3", "bottle4", "bomb_bag1", "bomb_bag2", "bomb_bag3", "hammer", "bow1", "bow2", "bow3", "hookshot1", "hookshot2", "strength1", "strength2", "strength3", "mirror_shield", "magic1", "magic2", "iron_boots", "kokiri_sword", "hover_boots", "wallet1", "wallet2", "wallet3", "goron_tunic", "zora_tunic", "dins_fire", "fire_arrows", "lens", "trade", "light_arrows", "ice_arrows", "forest_key_ring", "fire_key_ring", "water_key_ring", "spirit_key_ring", "shadow_key_ring", "well_key_ring", "gtg_key_ring", "ganons_key_ring", "gerudo_card", "magic_bean_pack", "text_zeldasSpot", "text_eponasSpot", "text_sariasSpot", "text_sunsSpot", "text_oot", "text_stormsSpot", "text_minuetSpot", "text_boleroSpot", "text_serenadeSpot", "text_requiemSpot", "text_nocturneSpot", "text_preludeSpot"];
-var checkSummaryText = ["Farores", "Slingshot", "Slingshot", "Slingshot", "Boomerang", "Scale", "Scale", "Letter", "Bottle", "Bottle", "Bottle", "Bottle", "Bomb Bag", "Bomb Bag", "Bomb Bag", "Hammer", "Bow", "Bow", "Bow", "Hookshot", "Hookshot", "Strength", "Strength", "Strength", "Mirror Shield", "Magic", "Magic", "Iron Boots", "Kokiri Sword", "Hover Boots", "Wallet", "Wallet", "Wallet", "Goron Tunic", "Zora Tunic", "Dins Fire", "Fire Arrows", "Lens", "Letter", "Trade", "Light Arrows", "Ice Arrows", "Forest Key Ring", "Fire Key Ring", "Water Key Ring", "Spirit Key Ring", "Shadow Key Ring", "Well Key Ring", "GTG Key Ring", "Ganons Key Ring", "Gerudo Card", "Magic Bean Pack"];
+var checkSummary = ["farores_wind", "slingshot1", "slingshot2", "slingshot3", "boomerang", "scale1", "scale2", "rutos_letter", "bottle1", "bottle2", "bottle3", "bottle4", "bomb_bag1", "bomb_bag2", "bomb_bag3", "hammer", "bow1", "bow2", "bow3", "hookshot1", "hookshot2", "strength1", "strength2", "strength3", "mirror_shield", "magic1", "magic2", "iron_boots", "kokiri_sword", "hover_boots", "wallet1", "wallet2", "wallet3", "goron_tunic", "zora_tunic", "dins_fire", "fire_arrows", "lens", "trade", "light_arrows", "ice_arrows","biggoron_sword", "nayrus_love", "stone_of_agony", "forest_key_ring", "fire_key_ring", "water_key_ring", "spirit_key_ring", "shadow_key_ring", "well_key_ring", "gtg_key_ring", "ganons_key_ring", "gerudo_card", "magic_bean_pack", "text_zeldasSpot", "text_eponasSpot", "text_sariasSpot", "text_sunsSpot", "text_oot", "text_stormsSpot", "text_minuetSpot", "text_boleroSpot", "text_serenadeSpot", "text_requiemSpot", "text_nocturneSpot", "text_preludeSpot"];
+var checkSummaryText = ["Farores", "Slingshot", "Slingshot", "Slingshot", "Boomerang", "Scale", "Scale", "Letter", "Bottle", "Bottle", "Bottle", "Bottle", "Bomb Bag", "Bomb Bag", "Bomb Bag", "Hammer", "Bow", "Bow", "Bow", "Hookshot", "Hookshot", "Strength", "Strength", "Strength", "Mirror Shield", "Magic", "Magic", "Iron Boots", "Kokiri Sword", "Hover Boots", "Wallet", "Wallet", "Wallet", "Goron Tunic", "Zora Tunic", "Dins Fire", "Fire Arrows", "Lens", "Letter", "Trade", "Light Arrows", "Ice Arrows", "BGS", "Nayru's", "Agony", "Forest Key Ring", "Fire Key Ring", "Water Key Ring", "Spirit Key Ring", "Shadow Key Ring", "Well Key Ring", "GTG Key Ring", "Ganons Key Ring", "Gerudo Card", "Magic Bean Pack"];
 var textSongSpots = ["text_zeldasSpot", "text_eponasSpot", "text_sariasSpot", "text_sunsSpot", "text_oot", "text_stormsSpot", "text_minuetSpot", "text_boleroSpot", "text_serenadeSpot", "text_requiemSpot", "text_nocturneSpot", "text_preludeSpot"];
 var songSpots = ["zeldasSpot", "eponasSpot", "sariasSpot", "sunsSpot", "oot", "stormsSpot", "minuetSpot", "boleroSpot", "serenadeSpot", "requiemSpot", "nocturneSpot", "preludeSpot"];
-var Items = ["farores_wind", "slingshot1", "slingshot2", "slingshot3", "boomerang", "scale1", "scale2", "rutos_letter", "bottle1", "bottle2", "bottle3", "bottle4", "bomb_bag1", "bomb_bag2", "bomb_bag3", "hammer", "bow1", "bow2", "bow3", "hookshot1", "hookshot2", "strength1", "strength2", "strength3", "mirror_shield", "magic1", "magic2", "iron_boots", "kokiri_sword", "hover_boots", "wallet1", "wallet2", "wallet3", "goron_tunic", "zora_tunic", "dins_fire", "fire_arrows", "lens", "prescription", "claim_check", "light_arrows", "ice_arrows", "forest_key_ring", "fire_key_ring", "water_key_ring", "spirit_key_ring", "shadow_key_ring", "well_key_ring", "gtg_key_ring", "ganons_key_ring", "gerudo_card", "magic_bean_pack", "lullaby", "eponas", "suns", "sarias", "storms", "minuet", "bolero", "requiem", "nocturne", "time", "prelude", "serenade"];
+var Items = ["farores_wind", "slingshot1", "slingshot2", "slingshot3", "boomerang", "scale1", "scale2", "rutos_letter", "bottle1", "bottle2", "bottle3", "bottle4", "bomb_bag1", "bomb_bag2", "bomb_bag3", "hammer", "bow1", "bow2", "bow3", "hookshot1", "hookshot2", "strength1", "strength2", "strength3", "mirror_shield", "magic1", "magic2", "iron_boots", "kokiri_sword", "hover_boots", "wallet1", "wallet2", "wallet3", "goron_tunic", "zora_tunic", "dins_fire", "fire_arrows", "lens", "prescription", "claim_check", "light_arrows", "ice_arrows", "biggoron_sword", "nayrus_love", "stone_of_agony", "forest_key_ring", "fire_key_ring", "water_key_ring", "spirit_key_ring", "shadow_key_ring", "well_key_ring", "gtg_key_ring", "ganons_key_ring", "gerudo_card", "magic_bean_pack", "lullaby", "eponas", "suns", "sarias", "storms", "minuet", "bolero", "requiem", "nocturne", "time", "prelude", "serenade"];
 var ItemImages = [];
-var ItemNames = ["Farores", "Slingshot", "Slingshot", "Slingshot", "Boomerang", "Scale", "Scale", "Letter", "Bottle", "Bottle", "Bottle", "Bottle", "Bomb Bag", "Bomb Bag", "Bomb Bag", "Hammer", "Bow", "Bow", "Bow", "Hookshot", "Hookshot", "Strength", "Strength", "Strength", "Mirror", "Magic", "Magic", "Iron Boots", "Kokiri Sword", "Hover Boots", "Wallet", "Wallet", "Wallet", "Goron Tunic", "Zora Tunic", "Din's Fire", "Fire Arrows", "Lens", "Prescription", "Claim Check", "Light Arrows", "Ice Arrows", "Forest Key Ring", "Fire Key Ring", "Water Key Ring", "Spirit Key Ring", "Shadow Key Ring", "Well Key Ring", "GTG Key Ring", "Ganons Key Ring", "Gerudo Card", "Magic Bean Pack", "Lullaby", "Eponas", "Suns", "Sarias", "Storms", "Minuet", "Bolero", "Requiem", "Nocturne", "Time", "Prelude", "Serenade"];
-var hintNames = ["clone", "mrhand", "dhback", "zdgame", "zdtorches", "gv1", "gv2", "labtop", "hba1", "csp1", "csp2", "hyb", "tek", "crb", "grb", "cob", "fop", "chf", "adf", "hyliasun", "poe", "len", "20s", "red", "coi", "cos", "sca", "fla", "wbk", "riv", "fin", "toi", "dea", "was", "wls", "pot", "dan", "lef", "rig", "goh", "gvh", "cuc", "cra", "mea", "1me", "kin", "jab", "sho", "hba", "ffl", "sfl", "3me", "ice", "fou", "kid", "big", "mas", "30s", "40s", "50s", "fr2","toss", "oot", "cas", "ogc", "tar", "fr1", "div", "pil", "shap", "iro", "sh2", "tru", "scr"];
-var hintNames2 = ["dlink", "hand", "bdh", "zddiv", "zdfir", "val1", "val2", "laptop", "100", "chspi1", "chspi2", "rut", "atz", "crater", "gybox", "colossusbean", "fop", "chfish", "adfish", "shootthesun", "poes", "lens", "20", "redead", "comp", "cos", "scarecrow", "hammer", "waterbk", "river", "gtgf", "toilet", "deadhand", "waste", "wsl", "pot", "daru", "left", "right", "gchammer", "gvhammer", "cucc", "bol", "min", "tot", "kz", "jabu", "shooting", "1500", "forestfloor", "shadowfloor", "noc", "ser", "fountain", "skullkid", "bgs", "skullmask", "30", "40", "50", "frog","ooti", "oot", "hfa", "gfa", "targ", "frogs1", "dive", "pill", "shapot", "iron", "st", "tru", "scr"];
-var hintNames3 = ["me", "dead", "steven", "zddive", "zdfire", "valleyledge", "waterfall", "topoflab", "1000", "cs1", "cs2", "ruto", "atz", "craterbean", "box", "col", "fop", "cfish", "afish", "sunshoot", "poe", "lensgame", "20s", "red", "composer", "cos", "pierre", "flare", "wbk", "riverch", "gtgfin", "gtgtoilet", "dea", "wasteland", "req", "pot", "darunia", "mir", "sil", "gcleft", "gvh", "cucco", "bolero", "minuet", "pre", "kingzora", "boom", "archery", "150", "ffloor", "shfloor", "nocturne", "serenade", "icy", "kid", "trade", "mask", "30s", "40s", "50s", "frogs","gfcb", "oots", "ohc", "ogc", "target", "frog1", "labdive", "pillar", "shp", "iro", "sha2", "tru", "scr"];
-var hintNames4 = ["yami", "deha", "steve", "domgame", "domtorches", "gvledge", "gvfall", "topolab", "hba1", "chspirit1", "chspirit2", "bottle", "atz", "crb", "gybean", "colo", "fop", "fish1", "fish2", "shootsun", "poe", "chestgame", "20s", "red", "coi", "cos", "sca", "flaredancer", "wbk", "riverchest", "gtgfinal", "toi", "dea", "wl", "desert", "pot", "dancin", "mirror", "silver", "maze3", "gvh", "cuccos", "cra", "mea", "prelude", "kin", "boomerang", "sho", "150", "ffl", "sfl", "3me", "ice", "fou", "kid", "bigo", "mas", "30s", "40s", "50s", "frogs2","thr", "ootsong", "casf", "gaf", "tar", "fr1", "lab", "pil", "shpot", "irons", "st2", "tru", "scr"];
-var hintNames5 = ["darklink", "deadhand", "dhbehind", "domdiv", "domfir", "valledge", "watfall", "labroof", "hba1", "ch1", "ch2", "bot", "atz", "crb", "grb", "colossus", "fop", "fish", "lunker", "ss", "poe", "cmg", "20s", "red", "coi", "cos", "sca", "ham", "wbk", "riv", "fin", "toi", "dea", "was", "colosong", "pot", "dancing", "lefthand", "silvers", "maze3!", "gvh", "chickens", "cra", "mea", "1me", "kin", "rang", "shooting", "150", "ffl", "sfl", "3me", "ice", "fou", "kid", "big", "mas", "30s", "40s", "50s", "fr2","thrown", "oot", "hyf", "ogc", "tar", "fr1", "exp", "pil", "spot", "iro", "lik", "tru", "scr"];
-var hintNames6 = ["dl", "dh", "inv", "domdive", "domfire", "valley1", "valley2", "laro","hba1", "chl", "chr", "bot", "atz", "crb", "grb", "colossus", "fop", "chf", "adf", "shoot", "poe", "cmg", "20s", "red", "coi", "cos", "sca", "fla", "wbk", "riv", "fin", "toi", "dea", "was", "wastesong", "pot", "dancing", "lefthand", "righthand", "gch", "gvh", "chicken", "cra", "mea", "1me", "kin", "boo", "shoo", "150", "ffl", "sfl", "3me", "ice", "fou", "kid", "big", "mas", "30s", "40s", "50s", "fr2","ootitem", "oot", "cas", "ogc", "tar", "fr1", "experiment", "pil", "shap", "iro", "sht", "tru", "scr"];
-var hintIndexes = ["water_dLink", "well_deadHand", "well_invisible", "zora_diving", "zora_torches", "gerudovalley_box", "gerudovalley_fall", "hylia_lab_top", "gerudo_archery_1", "spirit_childLeft","spirit_childRight", "hylia_bottle", "hyrule_tektite_grotto", "crater_bean", "graveyard_box", "colossus_bean", "ice_bottom_of_fountain", "hylia_child_fishing", "hylia_adult_fishing", "hylia_sun_shoot", "poes", "market_lens_game", "tokens_20", "redead_grave", "composers_grave", "sunsSpot", "fire_scarecrow", "fire_top", "water_bossKey","water_river", "gtg_final", "gtg_toilet", "well_deadHand", "wasteland", "requiemSpot", "goron_pot", "goron_dance", "spirit_leftHand", "spirit_rightHand", "goron_maze_3", "gerudo_hammer", "anjus_chickens", "boleroSpot", "minuetSpot", "preludeSpot", "thaw_king", "jabu_boomerang", "archery_game", "gerudo_archery_2", "forest_floormaster", "shadow_floormaster", "nocturneSpot", "serenadeSpot", "ice_bottom_of_fountain", "skull_kid", "trade_quest", "theater_skull", "tokens_30", "tokens_40", "tokens_50", "frogs_2", "hyrule_ocarina", "oot", "dins_fairy", "g_fairy", "target", "frogs_1", "hylia_lab_dive", "water_pillar", "shadow_pot", "ice_irons", "ganons_shadowTrial2", "theater_truth", "scrub_crater_child"];
+var ItemNames = ["Farores", "Slingshot", "Slingshot", "Slingshot", "Boomerang", "Scale", "Scale", "Letter", "Bottle", "Bottle", "Bottle", "Bottle", "Bomb Bag", "Bomb Bag", "Bomb Bag", "Hammer", "Bow", "Bow", "Bow", "Hookshot", "Hookshot", "Strength", "Strength", "Strength", "Mirror", "Magic", "Magic", "Iron Boots", "Kokiri Sword", "Hover Boots", "Wallet", "Wallet", "Wallet", "Goron Tunic", "Zora Tunic", "Din's Fire", "Fire Arrows", "Lens", "Prescription", "Claim Check", "Light Arrows", "Ice Arrows", "BGS", "Nayrus Love", "Stone of Agony", "Forest Key Ring", "Fire Key Ring", "Water Key Ring", "Spirit Key Ring", "Shadow Key Ring", "Well Key Ring", "GTG Key Ring", "Ganons Key Ring", "Gerudo Card", "Magic Bean Pack", "Lullaby", "Eponas", "Suns", "Sarias", "Storms", "Minuet", "Bolero", "Requiem", "Nocturne", "Time", "Prelude", "Serenade"];
 
-var Items2 = ["junk", "small_key", "boss_key", "bomb_bag", "bombchus", "boomerang", "bottle", "bottle", "bow", "dins_fire", "farores_wind", "fire_arrows", "goron_tunic", "hammer", "hookshot", "hover_boots", "iron_boots", "kokiri_sword", "lens", "rutos_letter", "light_arrows", "magic", "mirror_shield", "scale", "slingshot", "strength", "prescription", "claim_check", "wallet", "zora_tunic", "ice_arrows", "forest_key_ring", "fire_key_ring", "water_key_ring", "spirit_key_ring", "shadow_key_ring", "well_key_ring", "gtg_key_ring", "ganons_key_ring", "gerudo_card", "magic_bean_pack", "lullaby", "eponas", "sarias", "time", "suns", "storms", "minuet", "bolero", "serenade", "requiem", "nocturne", "prelude"];
-var ItemNames2 = ["Junk", "Small Key", "Boss Key", "Bomb Bag", "Bombchus", "Boomerang", "Bottle", "Big Poe", "Bow", "Din's Fire", "Farores", "Fire Arrows", "Goron Tunic", "Hammer", "Hookshot", "Hover Boots", "Iron Boots", "Kokiri Sword", "Lens", "Ruto's Letter", "Light Arrows", "Magic", "Mirror Shield", "Scale", "Slingshot", "Strength", "Prescription", "Claim Check", "Wallet", "Zora Tunic", "Ice Arrows", "Forest Key Ring", "Fire Key Ring", "Water Key Ring", "Spirit Key Ring", "Shadow Key Ring", "Well Key Ring", "GTG Key Ring", "Ganons Key Ring", "Gerudo Card", "Magic Bean Pack", "Lullaby", "Epona's", "Saria's", "Time", "Sun's", "Storms", "Minuet", "Bolero", "Serenade", "Requiem", "Nocturne", "Prelude"];
-var inputs = ["x", "sk", "bk", "bom", "chu", "boo", "bot", "big", "bow", "din", "far", "fir", "gor", "ham", "hoo", "hov", "iro", "kok", "len", "rut", "lig", "mag", "mir", "sca", "sli", "str", "scr", "cla", "wal", "zor", "ice", "fok", "fik", "wak", "spk", "shk", "wek", "gek", "gak", "ger", "bea", "lul", "epo", "sar", "sot", "sun", "sos", "min", "bol", "ser", "req", "noc", "pre"];
+// When adding to hint table, take care not to duplicate keys.
+// If this happens, the one appearing latest will be used.
+var hintTable = {
+	// Individual Hints.
+	"chicken": "anjus_chickens",
+	"chickens": "anjus_chickens",
+	"cuc": "anjus_chickens",
+	"cucc": "anjus_chickens",
+	"cucco": "anjus_chickens",
+	"cuccos": "anjus_chickens",
+	"archery": "archery_game",
+	"sho": "archery_game",
+	"shoo": "archery_game",
+	"shooting": "archery_game",
+	"bol": "boleroSpot",
+	"bolero": "boleroSpot",
+	"cra": "boleroSpot",
+	"cob": "colossus_bean",
+	"col": "colossus_bean",
+	"colo": "colossus_bean",
+	"colossus": "colossus_bean",
+	"colossusbean": "colossus_bean",
+	"coi": "composers_grave",
+	"comp": "composers_grave",
+	"composer": "composers_grave",
+	"crater": "crater_bean",
+	"craterbean": "crater_bean",
+	"crb": "crater_bean",
+	"cas": "dins_fairy",
+	"casf": "dins_fairy",
+	"hc": "dins_fairy",
+	"hfa": "dins_fairy",
+	"hyf": "dins_fairy",
+	"ohc": "dins_fairy",
+	"fla": "fire_top",
+	"flare": "fire_top",
+	"flaredancer": "fire_top",
+	"ham": "fire_top",
+	"hammer": "fire_top",
+	"pie": "fire_scarecrow",
+	"pierre": "fire_scarecrow",
+	"sca": "fire_scarecrow",
+	"scarecrow": "fire_scarecrow",
+	"ffl": "forest_floormaster",
+	"ffloor": "forest_floormaster",
+	"forestfloor": "forest_floormaster",
+	"fr1": "frogs_1",
+	"frog1": "frogs_1",
+	"frogs1": "frogs_1",
+	"fr2": "frogs_2",
+	"frog": "frogs_2",
+	"frogs": "frogs_2",
+	"frogs2": "frogs_2",
+	"gaf": "g_fairy",
+	"gfa": "g_fairy",
+	"ogc": "g_fairy",
+	"lik": "ganons_shadowTrial2",
+	"sh2": "ganons_shadowTrial2",
+	"sha2": "ganons_shadowTrial2",
+	"sht": "ganons_shadowTrial2",
+	"st": "ganons_shadowTrial2",
+	"st2": "ganons_shadowTrial2",
+	"100": "gerudo_archery_1",
+	"1000": "gerudo_archery_1",
+	"hba1": "gerudo_archery_1",
+	"150": "gerudo_archery_2",
+	"1500": "gerudo_archery_2",
+	"hba2": "gerudo_archery_2",
+	"gvh": "gerudo_hammer",
+	"gvhammer": "gerudo_hammer",
+	"gv1": "gerudovalley_box",
+	"gvledge": "gerudovalley_box",
+	"val1": "gerudovalley_box",
+	"valledge": "gerudovalley_box",
+	"valley1": "gerudovalley_box",
+	"valleyledge": "gerudovalley_box",
+	"gv2": "gerudovalley_fall",
+	"gvfall": "gerudovalley_fall",
+	"val2": "gerudovalley_fall",
+	"valley2": "gerudovalley_fall",
+	"waterfall": "gerudovalley_fall",
+	"watfall": "gerudovalley_fall",
+	"dan": "goron_dance",
+	"dancin": "goron_dance",
+	"dancing": "goron_dance",
+	"daru": "goron_dance",
+	"darunia": "goron_dance",
+	"gch": "goron_maze_3",
+	"gchammer": "goron_maze_3",
+	"gcleft": "goron_maze_3",
+	"goh": "goron_maze_3",
+	"maze3": "goron_maze_3",
+	"maze3!": "goron_maze_3",
+	"pot": "goron_pot",
+	"box": "graveyard_box",
+	"grb": "graveyard_box",
+	"gybean": "graveyard_box",
+	"gybox": "graveyard_box",
+	"fin": "gtg_final",
+	"gtg": "gtg_final",
+	"gtgf": "gtg_final",
+	"gtgfin": "gtg_final",
+	"gtgfinal": "gtg_final",
+	"gtgtoilet": "gtg_toilet",
+	"toi": "gtg_toilet",
+	"toilet": "gtg_toilet",
+	"adf": "hylia_adult_fishing",
+	"adfish": "hylia_adult_fishing",
+	"afish": "hylia_adult_fishing",
+	"fish2": "hylia_adult_fishing",
+	"lunker": "hylia_adult_fishing",
+	"bot": "hylia_bottle",
+	"bottle": "hylia_bottle",
+	"hyb": "hylia_bottle",
+	"rut": "hylia_bottle",
+	"ruto": "hylia_bottle",
+	"cfish": "hylia_child_fishing",
+	"chf": "hylia_child_fishing",
+	"chfish": "hylia_child_fishing",
+	"fish": "hylia_child_fishing",
+	"fish1": "hylia_child_fishing",
+	"div": "hylia_lab_dive",
+	"dive": "hylia_lab_dive",
+	"exp": "hylia_lab_dive",
+	"experiment": "hylia_lab_dive",
+	"lab": "hylia_lab_dive",
+	"labdive": "hylia_lab_dive",
+	"labroof": "hylia_lab_top",
+	"laptop": "hylia_lab_top",
+	"laro": "hylia_lab_top",
+	"topoflab": "hylia_lab_top",
+	"topolab": "hylia_lab_top",
+	"hyliasun": "hylia_sun_shoot",
+	"shoot": "hylia_sun_shoot",
+	"shootsun": "hylia_sun_shoot",
+	"shootthesun": "hylia_sun_shoot",
+	"shsun": "hylia_sun_shoot",
+	"ss": "hylia_sun_shoot",
+	"sts": "hylia_sun_shoot",
+	"sunshoot": "hylia_sun_shoot",
+	"gfcb": "hyrule_ocarina",
+	"ooti": "hyrule_ocarina",
+	"ootitem": "hyrule_ocarina",
+	"thr": "hyrule_ocarina",
+	"thrown": "hyrule_ocarina",
+	"toss": "hyrule_ocarina",
+	"atz": "hyrule_tektite_grotto",
+	"tek": "hyrule_tektite_grotto",
+	"fop": "ice_bottom_of_fountain",
+	"fou": "ice_bottom_of_fountain",
+	"fountain": "ice_bottom_of_fountain",
+	"icy": "ice_bottom_of_fountain",
+	"iro": "ice_irons",
+	"iron": "ice_irons",
+	"irons": "ice_irons",
+	"boo": "jabu_boomerang",
+	"boom": "jabu_boomerang",
+	"boomerang": "jabu_boomerang",
+	"jab": "jabu_boomerang",
+	"jabu": "jabu_boomerang",
+	"rang": "jabu_boomerang",
+	"chestgame": "market_lens_game",
+	"cmg": "market_lens_game",
+	"len": "market_lens_game",
+	"lens": "market_lens_game",
+	"lensgame": "market_lens_game",
+	"tcg": "market_lens_game",
+	"mea": "minuetSpot",
+	"min": "minuetSpot",
+	"minuet": "minuetSpot",
+	"3me": "nocturneSpot",
+	"noc": "nocturneSpot",
+	"nocturne": "nocturneSpot",
+	"oot": "oot",
+	"oots": "oot",
+	"ootsong": "oot",
+	"poe": "poes",
+	"poes": "poes",
+	"1me": "preludeSpot",
+	"pre": "preludeSpot",
+	"prelude": "preludeSpot",
+	"tot": "preludeSpot",
+	"red": "redead_grave",
+	"redead": "redead_grave",
+	"sgr": "redead_grave",
+	"sung": "redead_grave",
+	"sungrave": "redead_grave",
+	"colosong": "requiemSpot",
+	"desert": "requiemSpot",
+	"req": "requiemSpot",
+	"wastesong": "requiemSpot",
+	"wls": "requiemSpot",
+	"wsl": "requiemSpot",
+	"scr": "scrub_crater_child",
+	"ice": "serenadeSpot",
+	"ser": "serenadeSpot",
+	"serenade": "serenadeSpot",
+	"sfl": "shadow_floormaster",
+	"shadowfloor": "shadow_floormaster",
+	"shfloor": "shadow_floormaster",
+	"shap": "shadow_pot",
+	"shapot": "shadow_pot",
+	"shp": "shadow_pot",
+	"shpot": "shadow_pot",
+	"spot": "shadow_pot",
+	"kid": "skull_kid",
+	"skullkid": "skull_kid",
+	"ch1": "spirit_childLeft",
+	"chl": "spirit_childLeft",
+	"chspi1": "spirit_childLeft",
+	"chspirit1": "spirit_childLeft",
+	"cs1": "spirit_childLeft",
+	"csp1": "spirit_childLeft",
+	"ch2": "spirit_childRight",
+	"chr": "spirit_childRight",
+	"chspi2": "spirit_childRight",
+	"chspirit2": "spirit_childRight",
+	"cs2": "spirit_childRight",
+	"csp2": "spirit_childRight",
+	"lef": "spirit_leftHand",
+	"left": "spirit_leftHand",
+	"lefthand": "spirit_leftHand",
+	"mir": "spirit_leftHand",
+	"mirror": "spirit_leftHand",
+	"rig": "spirit_rightHand",
+	"right": "spirit_rightHand",
+	"righthand": "spirit_rightHand",
+	"sil": "spirit_rightHand",
+	"silver": "spirit_rightHand",
+	"silvers": "spirit_rightHand",
+	"cos": "sunsSpot",
+	"tar": "target",
+	"targ": "target",
+	"target": "target",
+	"tru": "theater_truth",
+	"mas": "theater_skull",
+	"mask": "theater_skull",
+	"skullmask": "theater_skull",
+	"kin": "thaw_king",
+	"kingzora": "thaw_king",
+	"kz": "thaw_king",
+	"20": "tokens_20",
+	"20s": "tokens_20",
+	"30": "tokens_30",
+	"30s": "tokens_30",
+	"40": "tokens_40",
+	"40s": "tokens_40",
+	"50": "tokens_50",
+	"50s": "tokens_50",
+	"bgs": "trade_quest",
+	"big": "trade_quest",
+	"bigo": "trade_quest",
+	"trade": "trade_quest",
+	"was": "wasteland",
+	"waste": "wasteland",
+	"wasteland": "wasteland",
+	"wl": "wasteland",
+	"waterbk": "water_bossKey",
+	"wbk": "water_bossKey",
+	"clone": "water_dLink",
+	"darklink": "water_dLink",
+	"dl": "water_dLink",
+	"dlink": "water_dLink",
+	"me": "water_dLink",
+	"yami": "water_dLink",
+	"cen": "water_pillar",
+	"cent": "water_pillar",
+	"central": "water_pillar",
+	"pil": "water_pillar",
+	"pill": "water_pillar",
+	"pillar": "water_pillar",
+	"riv": "water_river",
+	"river": "water_river",
+	"riverch": "water_river",
+	"riverchest": "water_river",
+	"dea": "well_deadHand",
+	"dead": "well_deadHand",
+	"deadhand": "well_deadHand",
+	"deha": "well_deadHand",
+	"dh": "well_deadHand",
+	"hand": "well_deadHand",
+	"mrhand": "well_deadHand",
+	"bdh": "well_invisible",
+	"dhback": "well_invisible",
+	"dhbehind": "well_invisible",
+	"inv": "well_invisible",
+	"steve": "well_invisible",
+	"steven": "well_invisible",
+	"domdiv": "zora_diving",
+	"domdive": "zora_diving",
+	"domgame": "zora_diving",
+	"zddiv": "zora_diving",
+	"zddive": "zora_diving",
+	"zdgame": "zora_diving",
+	"domfir": "zora_torches",
+	"domfire": "zora_torches",
+	"domtorches": "zora_torches",
+	"zdfir": "zora_torches",
+	"zdfire": "zora_torches",
+	"zdtorches": "zora_torches",
+
+	// Dual Hints.
+	"hcogc": ["dins_fairy", "g_fairy"],
+	"fil": ["fire_hammer1", "fire_hammer2"],
+	"filoop": ["fire_hammer1", "fire_hammer2"],
+	"haml": ["fire_hammer1", "fire_hammer2"],
+	"hamloop": ["fire_hammer1", "fire_hammer2"],
+	"spt": ["ganons_spiritTrial1", "ganons_spiritTrial2"],
+	"hba": ["gerudo_archery_1", "gerudo_archery_2"],
+	"gv": ["gerudovalley_box", "gerudovalley_fall"],
+	"val": ["gerudovalley_box", "gerudovalley_fall"],
+	"lh": ["hylia_lab_top", "hylia_adult_fishing"],
+	"lhb": ["hylia_lab_top", "hylia_adult_fishing"],
+	"lhbean": ["hylia_lab_top", "hylia_adult_fishing"],
+	"bowl": ["market_bowling_1", "market_bowling_2"],
+	"bowling": ["market_bowling_1", "market_bowling_2"],
+	"chu": ["market_bowling_1", "market_bowling_2"],
+	"shdin": ["shadow_dins1", "shadow_dins2"],
+	"shend": ["shadow_dins1", "shadow_dins2"],
+	"shwo": ["shadow_dins1", "shadow_dins2"],
+	"shwood": ["shadow_dins1", "shadow_dins2"],
+	"shinv": ["shadow_spinning1", "shadow_spinning2"],
+	"shblades": ["shadow_spinning1", "shadow_spinning2"],
+	"adsp": ["spirit_adultLeft", "spirit_adultRight"],
+	"spblock": ["spirit_adultLeft", "spirit_adultRight"],
+	"chsp": ["spirit_childLeft", "spirit_childRight"],
+	"spcrawl": ["spirit_childLeft", "spirit_childRight"],
+	"rhlh": ["spirit_rightHand", "spirit_leftHand"],
+	"sphands": ["spirit_rightHand", "spirit_leftHand"],
+	"dll": ["water_dLink", "water_river"],
+	"dlloop": ["water_dLink", "water_river"],
+	"dlriv": ["water_dLink", "water_river"],
+	"dea2": ["well_deadHand", "well_invisible"],
+	"dead2": ["well_deadHand", "well_invisible"],
+	"deha2": ["well_deadHand", "well_invisible"],
+	"dh2": ["well_deadHand", "well_invisible"],
+	"dom": ["zora_diving", "zora_torches"],
+	"domdt": ["zora_diving", "zora_torches"],
+	"zd": ["zora_diving", "zora_torches"],
+	"zddt": ["zora_diving", "zora_torches"],
+};
+
+var Items2 = ["junk", "small_key", "boss_key", "bomb_bag", "bombchus", "boomerang", "bottle", "bottle", "bow", "dins_fire", "farores_wind", "fire_arrows", "goron_tunic", "hammer", "hookshot", "hover_boots", "iron_boots", "kokiri_sword", "lens", "rutos_letter", "light_arrows", "magic", "mirror_shield", "scale", "slingshot", "strength", "prescription", "claim_check", "wallet", "zora_tunic", "ice_arrows", "biggoron_sword", "nayrus_love", "stone_of_agony", "forest_key_ring", "fire_key_ring", "water_key_ring", "spirit_key_ring", "shadow_key_ring", "well_key_ring", "gtg_key_ring", "ganons_key_ring", "gerudo_card", "magic_bean_pack", "lullaby", "eponas", "sarias", "time", "suns", "storms", "minuet", "bolero", "serenade", "requiem", "nocturne", "prelude"];
+var ItemNames2 = ["Junk", "Small Key", "Boss Key", "Bomb Bag", "Bombchus", "Boomerang", "Bottle", "Big Poe", "Bow", "Din's Fire", "Farores", "Fire Arrows", "Goron Tunic", "Hammer", "Hookshot", "Hover Boots", "Iron Boots", "Kokiri Sword", "Lens", "Ruto's Letter", "Light Arrows", "Magic", "Mirror Shield", "Scale", "Slingshot", "Strength", "Prescription", "Claim Check", "Wallet", "Zora Tunic", "Ice Arrows", "BGS", "Nayrus Love", "Stone of Agony", "Forest Key Ring", "Fire Key Ring", "Water Key Ring", "Spirit Key Ring", "Shadow Key Ring", "Well Key Ring", "GTG Key Ring", "Ganons Key Ring", "Gerudo Card", "Magic Bean Pack", "Lullaby", "Epona's", "Saria's", "Time", "Sun's", "Storms", "Minuet", "Bolero", "Serenade", "Requiem", "Nocturne", "Prelude"];
+var inputs = ["x", "sk", "bk", "bom", "chu", "boo", "bot", "big", "bow", "din", "far", "fir", "gor", "ham", "hoo", "hov", "iro", "kok", "len", "rut", "lig", "mag", "mir", "sca", "sli", "str", "scr", "cla", "wal", "zor", "ice", "bgs", "nay", "sto", "fok", "fik", "wak", "spk", "shk", "wek", "gek", "gak", "ger", "bea", "lul", "epo", "sar", "sot", "sun", "sos", "min", "bol", "ser", "req", "noc", "pre"];
 var songInputs = ["lul", "epo", "sar", "sot", "sun", "sos", "min", "bol", "ser", "req", "noc", "pre"];
-var itemInputs = ["x", "sk", "bk", "bom", "chu", "boo", "bot", "big", "bow", "din", "far", "fir", "gor", "ham", "hoo", "hov", "iro", "kok", "len", "rut", "lig", "mag", "mir", "sca", "sli", "str", "scr", "cla", "wal", "zor", "ice", "fok", "fik", "wak", "spk", "shk", "wek", "gek", "gak", "ger", "bea"];
-var inputNames = ["Junk", "Small Key", "Boss Key", "Bomb Bag", "Bombchus", "Boomerang", "Bottle", "Big Poe", "Bow", "Din's Fire", "Farore's Wind", "Fire Arrows", "Goron Tunic", "Hammer", "Progressive Hookshot", "Hover Boots", "Iron Boots", "Kokiri Sword", "Lens", "Ruto's Letter", "Light Arrows", "Magic", "Mirror Shield", "Progressive Scale", "Slingshot", "Progressive Strength", "Prescription", "Claim Check", "Progressive Wallet", "Zora Tunic", "Ice Arrows", "Forest Key Ring", "Fire Key Ring", "Water Key Ring", "Spirit Key Ring", "Shadow Key Ring", "Well Key Ring", "GTG Key Ring", "Ganons Key Ring", "Gerudo Card", "Magic Bean Pack", "Lullaby", "Epona's Song", "Saria's Song", "Song of Time", "Sun's Song", "Song of Storms", "Minuet", "Bolero", "Serenade", "Requiem", "Nocturne", "Prelude"];
+var itemInputs = ["x", "sk", "bk", "bom", "chu", "boo", "bot", "big", "bow", "din", "far", "fir", "gor", "ham", "hoo", "hov", "iro", "kok", "len", "rut", "lig", "mag", "mir", "sca", "sli", "str", "scr", "cla", "wal", "zor", "ice", "bgs", "nay", "sto", "fok", "fik", "wak", "spk", "shk", "wek", "gek", "gak", "ger", "bea"];
+var inputNames = ["Junk", "Small Key", "Boss Key", "Bomb Bag", "Bombchus", "Boomerang", "Bottle", "Big Poe", "Bow", "Din's Fire", "Farore's Wind", "Fire Arrows", "Goron Tunic", "Hammer", "Progressive Hookshot", "Hover Boots", "Iron Boots", "Kokiri Sword", "Lens", "Ruto's Letter", "Light Arrows", "Magic", "Mirror Shield", "Progressive Scale", "Slingshot", "Progressive Strength", "Prescription", "Claim Check", "Progressive Wallet", "Zora Tunic", "Ice Arrows", "BGS", "Nayrus Love", "Stone of Agony", "Forest Key Ring", "Fire Key Ring", "Water Key Ring", "Spirit Key Ring", "Shadow Key Ring", "Well Key Ring", "GTG Key Ring", "Ganons Key Ring", "Gerudo Card", "Magic Bean Pack", "Lullaby", "Epona's Song", "Saria's Song", "Song of Time", "Sun's Song", "Song of Storms", "Minuet", "Bolero", "Serenade", "Requiem", "Nocturne", "Prelude"];
 var DuplicateItems = ["slingshot", "scale", "bottle", "bomb_bag", "bow", "hookshot", "strength", "magic", "wallet"];
 var spawnInputs = ["dmcl", "dmcf", "dmcu", "dmtf","dmtfool", "gf", "waste", "col", "zd", "zr", "zf", "zff", "zffool", "hf", "sfm", "noct", "fish", "ogc","ogcool", "gcshop", "zdshop", "kakr" ];
 var spawnNames = ["DMC by Goron City", "DMC fountain", "DMC by trail", "trail fairy", "trail fairy(ool)", "fortress", "waste", "colossus", "domain", "river", "fountain", "fountain fairy", "fountain fairy(ool)", "dins fairy", "sfm", "nocturne", "fishing", "ogc fairy","ogc fairy(ool)", "goron shop", "domain shop", "kak rooftop"];
@@ -564,13 +900,13 @@ var Names = [
 	/*Fortress*/"Card", "*Fort", "Roof", "1000", "1500", "*Target", 
 	/*Jabu Jabu*/"*Vines", "Scrub", "Map", "Compass", "Rang", "*B4 Octo", "*B4 Octo", "*B4 Boss", "Barinade",
 	/*Forest Temple*/"First", "*First", "*Lobby", "Stalfos", "C Plat", "*C Plat", "C Bubble", "C Well", "Push Eye", "BK", "Flrmaster", "*Arch", "Red", "Bow", "Blue", "Falling", "Basement", "*Base", "Phantom",
-	/*Fire Temple*/"Near Boss", "*Hammer", "Hammer", "Hammer", "Lav Left", "*SoT", "Lav Right", "Volvagia", "Low Cell", "*Maze", "Low Cell", "Map", "High Cell", "Shortcut", "*Pierre", "*Pierre", "Pierre", "Compass", "HighGoron", "Hammer",
+	/*Fire Temple*/"Near Boss", "*Hammer", "Hammer", "Hammer", "Lav Left", "*SoT", "Lav Right", "Volvagia", "Low Cell", "*Maze", "Low Cell", "Map", "High Cell", "Shortcut", "*Pierre", "*Pierre", "Pierre", "Compass", "HiGoron", "Hammer",
 	/*Spirit Temple*/"Ch. Left", "Ch. Right", "*Fence", "Ch. Climb", "*Ch Climb", "Ch. Climb", "Map", "Sun Room", "*B4 Knuck", "Silvers", "Ad. Left", "*SoT", "Ad. Right", "Ad. Climb", "Ad. Climb", "LullaHand", "LullaHigh", "*Main", "4 Armos", "Invisible", "Invisible", "Mirror", "BK", "Tippy Top", "Twinrova",
 	/*Shadow Temple*/"Map", "Hovers", "Gibdos", "Spin Blade", "*Spinning", "Inv Blade", "Inv Blade", "Crusher L", "*Crusher", "Crusher H", "Crusher H", "Redeads", "*Pot", "Pot", "Wind", "Bombable", "Gibdos", "*Boat", "Dins", "Dins", "*3 Pots", "Floor", "Bongo",
 	/*Water Temple*/"Compass", "Map", "Cracked", "Torches", "*Near BK", "BK", "*S Base", "Block", "*Pillar", "Central P", "*Plats", "D Link", "*River", "River", "Dragon", "Morpha",
 	/*Ganon's Castle*/"Scrub", "Scrub", "Scrub", "Scrub", "Light 1", "Light 2", "Light 3", "Light 4", "Light 5", "Light 6", "Light Clr", "Light Lul", "Spirit 1", "Spirit 2", "Forest", "Water 1", "Water 2", "Shadow 1", "Shadow 2", "BK",
 	/*Gerudo Training Grounds*/"Lobby", "Lobby", "Stalfos", "Wolfos", "Silvers", "Silvers", "Silvers", "Silvers", "Eyes", "Abv Eyes", "Enemies", "Fire", "R1", "R2", "R3", "Beamos", "L1",  "L2", "L3", "L4", "Final", "Toilet",
-	/*Bottom of the Well*/"Fake L", "Bomb", "Center", "Fake R", "Center", "Bomb back", "Water L", "Coffin", "Water F", "Dead Hand", "Dead Hand", "*Door L", "*Door R", "Locked 1", "Locked 2", "*Locked", "Basement",
+	/*Bottom of the Well*/"Fake L", "Bomb", "Center", "Fake R", "Center", "Bomb B", "Water L", "Coffin", "Water F", "DH Inv", "DeadHand", "*Door L", "*Door R", "Locked 1", "Locked 2", "*Locked", "Basement",
 	/*Songs*/"Zelda", "Malon", "Saria", "Windmill", "Grave", "Crater", "Ad. SFM", "Colossus", "Ice", "1 Med", "3 Med", "OoT Song"
 ];
 var alwaysHints = ["tokens_30", "tokens_40", "tokens_50", "oot", "trade_quest", "frogs_2", "theater_skull"];
@@ -1046,17 +1382,15 @@ var colorWothAreas = false;
 var hideInaccessible = true;
 var coopmode = false;
 if (localStorage.getItem("hideInaccessible") != null) {if (localStorage.getItem("hideInaccessible") == "false"){hideInaccessible = false; document.getElementById("inaccessibleControl").innerHTML = "Hide Inaccessible"};}
+if (localStorage.getItem("wothSize") === "big") wothSizeToggle();
 
+// halp button
 var modal = document.getElementById("myModal");
-
 var btn = document.getElementById("myBtn");
-
 var span = document.getElementsByClassName("close")[0];
-
 btn.onclick = function() {
   modal.style.display = "block";
 }
-
 span.onclick = function() {
   modal.style.display = "none";
 }
@@ -1066,22 +1400,35 @@ window.onclick = function(event) {
   }
 }
 
+// location codes button
 var modal3 = document.getElementById("myModal3");
-
 var btn = document.getElementById("locationCodes");
-
 var span = document.getElementsByClassName("close")[1];
-
 btn.onclick = function() {
   modal3.style.display = "block";
 }
-
 span.onclick = function() {
   modal3.style.display = "none";
 }
 window.onclick = function(event) {
   if (event.target == modal3) {
     modal3.style.display = "none";
+  }
+}
+
+// patch notes button
+var patchNotesModal = document.getElementById("patchNotesModal");
+var btn = document.getElementById("patchNotesBtn");
+var span = document.getElementsByClassName("close")[2];
+btn.onclick = function() {
+  patchNotesModal.style.display = "block";
+}
+span.onclick = function() {
+  patchNotesModal.style.display = "none";
+}
+window.onclick = function(event) {
+  if (event.target == patchNotesModal) {
+    patchNotesModal.style.display = "none";
   }
 }
 
@@ -1113,153 +1460,152 @@ var backgrounds = ["url('./normal/areas/kokiri.jpg')","url('./normal/areas/ranch
 ]
 
 var background = "url('./normal/areas/kokiri.jpg')";
-var elem = document.createElement("small"); elem.id = "title_kokiri"; elem.className = "area_titles"; elem.innerHTML = "Kokiri  "; parent.appendChild(elem);
-var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+var elem = document.createElement("small"); elem.id = "title_kokiri"; elem.className = "area_titles hidden"; elem.innerHTML = "Kokiri"; parent.appendChild(elem);
+var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 for (var i = 0; i<Locations.length; i++) {
 	if (i == AreaIndexes[1]) {
 		background = "url('./normal/areas/ranch.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "kokiri_break";  parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_ranch"; elem.className = "area_titles"; elem.innerHTML = "Lon Lon"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
-(elem);
+		var elem = document.createElement("small"); elem.id = "title_ranch"; elem.className = "area_titles hidden"; elem.innerHTML = "Lon Lon"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[2]) {
 		background = "url('./normal/areas/field.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "ranch_break";  parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_field"; elem.className = "area_titles"; elem.innerHTML = "Field   "; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_field"; elem.className = "area_titles hidden"; elem.innerHTML = "Field"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[3]) {
 		background = "url('./normal/areas/valley.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "field_break";  parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_valley"; elem.className = "area_titles"; elem.innerHTML = "Valley"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_valley"; elem.className = "area_titles hidden"; elem.innerHTML = "Valley"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[4]) {
 		background = "url('./normal/areas/hylia.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "valley_break";  parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_hylia"; elem.className = "area_titles"; elem.innerHTML = "Lake"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_hylia"; elem.className = "area_titles hidden"; elem.innerHTML = "Lake"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[5]) {
 		background = "url('./normal/areas/market.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "hylia_break";  parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_market"; elem.className = "area_titles"; elem.innerHTML = "Market"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_market"; elem.className = "area_titles hidden"; elem.innerHTML = "Market"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[6]) {
 		background = "url('./normal/areas/hyrule_castle.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "market_break";  parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_hcastle"; elem.className = "area_titles"; elem.innerHTML = "Castle"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_hcastle"; elem.className = "area_titles hidden"; elem.innerHTML = "Castle"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[7]) {
 		background = "url('./normal/areas/ogc.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "hyrule_castle_break";  parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_outG"; elem.className = "area_titles"; elem.innerHTML = "OGC"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_outG"; elem.className = "area_titles hidden"; elem.innerHTML = "OGC"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[8]) {
 		background = "url('./normal/areas/tot.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "ogc_break";  parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_ToT"; elem.className = "area_titles"; elem.innerHTML = "ToT"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_ToT"; elem.className = "area_titles hidden"; elem.innerHTML = "ToT"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[9]) {
 		background = "url('./normal/areas/fountain.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "tot_break";  parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_fountain"; elem.className = "area_titles"; elem.innerHTML = "Fountain"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_fountain"; elem.className = "area_titles hidden"; elem.innerHTML = "Fountain"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[10]) {
 		background = "url('./normal/areas/ice.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "fountain_break";  parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_ice"; elem.className = "area_titles"; elem.innerHTML = "Ice"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_ice"; elem.className = "area_titles hidden"; elem.innerHTML = "Ice"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[11]) {
 		background = "url('./normal/areas/deku.jpg')";
 		parent = document.getElementById("normalColumn2");
-		var elem = document.createElement("small"); elem.id = "title_deku"; elem.className = "area_titles"; elem.innerHTML = "Deku"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_deku"; elem.className = "area_titles hidden"; elem.innerHTML = "Deku"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[12]) {
 		background = "url('./normal/areas/lost_woods.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "deku_break"; parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_lostwoods"; elem.className = "area_titles"; elem.innerHTML = "Lost Woods"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_lostwoods"; elem.className = "area_titles hidden"; elem.innerHTML = "Lost Woods"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[13]) {
 		background = "url('./normal/areas/sfm.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "lost_woods_break";  parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_sfm"; elem.className = "area_titles"; elem.innerHTML = "SFM"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_sfm"; elem.className = "area_titles hidden"; elem.innerHTML = "SFM"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[14]) {
 		background = "url('./normal/areas/goron.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "sfm_break";  parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_gcity"; elem.className = "area_titles"; elem.innerHTML = "Goron"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_gcity"; elem.className = "area_titles hidden"; elem.innerHTML = "Goron"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[15]) {
 		background = "url('./normal/areas/dodongos.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "goron_break";  parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_dodongos"; elem.className = "area_titles"; elem.innerHTML = "DC"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_dodongos"; elem.className = "area_titles hidden"; elem.innerHTML = "DC"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[16]) {
 		background = "url('./normal/areas/dmt.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "dodongos_break";  parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_trail"; elem.className = "area_titles"; elem.innerHTML = "Trail"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_trail"; elem.className = "area_titles hidden"; elem.innerHTML = "Trail"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[17]) {
 		background = "url('./normal/areas/dmc.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "dmt_break";  parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_crater"; elem.className = "area_titles"; elem.innerHTML = "Crater"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_crater"; elem.className = "area_titles hidden"; elem.innerHTML = "Crater"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[18]) {
 		background = "url('./normal/areas/kakariko.jpg')";
 		parent = document.getElementById("normalColumn3");
-		var elem = document.createElement("small"); elem.id = "title_kakariko"; elem.className = "area_titles"; elem.innerHTML = "Kakariko"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_kakariko"; elem.className = "area_titles hidden"; elem.innerHTML = "Kakariko"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[19]) {
 		background = "url('./normal/areas/graveyard.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "kakariko_break"; parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_graveyard"; elem.className = "area_titles"; elem.innerHTML = "Graveyard"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_graveyard"; elem.className = "area_titles hidden"; elem.innerHTML = "Graveyard"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[20]) {
 		background = "url('./normal/areas/river.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "graveyard_break";  parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_river"; elem.className = "area_titles"; elem.innerHTML = "River"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_river"; elem.className = "area_titles hidden"; elem.innerHTML = "River"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[21]) {
 		background = "url('./normal/areas/domain.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "river_break";  parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_domain"; elem.className = "area_titles"; elem.innerHTML = "Domain"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_domain"; elem.className = "area_titles hidden"; elem.innerHTML = "Domain"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[22]) {
 		background = "url('./normal/areas/colossus.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "domain_break";  parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_colossus"; elem.className = "area_titles"; elem.innerHTML = "Colossus"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_colossus"; elem.className = "area_titles hidden"; elem.innerHTML = "Colossus"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[23]) {
 		background = "url('./normal/areas/wasteland.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "colossus_break";  parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_wasteland"; elem.className = "area_titles"; elem.innerHTML = "Wasteland"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_wasteland"; elem.className = "area_titles hidden"; elem.innerHTML = "Wasteland"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[24]) {
 		background = "url('./normal/areas/fortress.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "wasteland_break";  parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_fortress"; elem.className = "area_titles"; elem.innerHTML = "Fortress"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_fortress"; elem.className = "area_titles hidden"; elem.innerHTML = "Fortress"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[25]) {
 		background = "url('./normal/areas/fortress.jpg')";
@@ -1268,8 +1614,8 @@ for (var i = 0; i<Locations.length; i++) {
 	if (i == AreaIndexes[26]) {
 		background = "url('./normal/areas/jabu.jpg')";
 		var elem = document.createElement("br"); elem.className = "half_break"; elem.id = "fortress_break";  parent.appendChild(elem);
-		var elem = document.createElement("small"); elem.id = "title_jabu"; elem.className = "area_titles"; elem.innerHTML = "Jabu"; parent.appendChild(elem);
-		var elem = document.createElement("br"); elem.className = "big_break"; parent.appendChild(elem);
+		var elem = document.createElement("small"); elem.id = "title_jabu"; elem.className = "area_titles hidden"; elem.innerHTML = "Jabu"; parent.appendChild(elem);
+		var elem = document.createElement("br"); elem.className = "area_titles_break hidden"; parent.appendChild(elem);
 	}
 	if (i == AreaIndexes[27]) {
 		parent = document.getElementById("dung1"); background = "url('./normal/areas/forest.jpg')";
@@ -1348,6 +1694,8 @@ for (var i = 0; i<Locations.length; i++) {
 	}
 }
 
+if (localStorage.getItem("showAreaTitles") === "true") areaTitlesToggle();
+
 var backUp = [];
 		
 for (var i = 0; i < Locations.length; i++) {
@@ -1362,7 +1710,7 @@ for (var i = 0; i < Items.length; i++) {
 
 locationLogic();
 
-var linsoOrder = ["stick", "nut", "bomb", "bow", "fire_arrows", "dins_fire", "slingshot", "ocarina", "chu", "hookshot", "ice_arrows", "farores_wind", "boomerang", "lens", "beans", "hammer", "light_arrows", "nayrus_love", "rutos_letter", "bottle1", "bottle2", "bottle3", "egg1", "egg2", "kokiri_sword", "master_sword", "biggoron_sword", "circus", "skull_token", "skull_counter", "deku_shield", "hylian_shield", "mirror_shield", "magic", "adults_wallet", "gerudo_card", "kokiri_tunic", "goron_tunic", "zora_tunic", "agony", "silver_scale", "goron_bracelet", "kokiri_boots", "iron_boots", "hover_boots", "emerald", "ruby", "sapphire", "forest", "fire", "water", "gen1", "gen2", "gen3"];
+var linsoOrder = ["stick", "nut", "bomb", "bow", "fire_arrows", "dins_fire", "slingshot", "ocarina", "chu", "hookshot", "ice_arrows", "farores_wind", "boomerang", "lens", "beans", "hammer", "light_arrows", "nayrus_love", "rutos_letter", "bottle1", "bottle2", "bottle3", "egg1", "egg2", "kokiri_sword", "master_sword", "biggoron_sword", "circus", "skull_token", "skull_counter", "deku_shield", "hylian_shield", "mirror_shield", "magic", "adults_wallet", "gerudo_card", "kokiri_tunic", "goron_tunic", "zora_tunic", "stone_of_agony", "silver_scale", "goron_bracelet", "kokiri_boots", "iron_boots", "hover_boots", "emerald", "ruby", "sapphire", "forest", "fire", "water", "gen1", "gen2", "gen3"];
 var linsoOrder2 = ["lullaby", "eponas", "sarias", "suns", "time", "storms", "minuet", "bolero", "serenade", "nocturne", "requiem", "prelude"];
 
 changeThemes();
@@ -2506,6 +2854,9 @@ function popup() {
 }
 document.documentElement.spellcheck = false;
 document.getElementById("hintInput").innerHTML = "30 \n40 \n50 \noot \nnoc \nbig \nfr2 \nmas \n";
+if (document.getElementById("presets").value == "S9") {
+	document.getElementById("hintInput").innerHTML = "30 \n40 \n50 \noot \nnoc \nbig \nfr2 \nmas \n\n2 dual:\n\n\n\n3 some:\n\n\n";
+}
 if (document.getElementById("presets").value == "SGL_2025") {
 	document.getElementById("hintInput").innerHTML = "20 \n30 \n40 x\n50 x\nnoc \nfr2 \nmas \nLIGHT precomp.\n3 dual: \n6 some: \n";
 	document.getElementById("preludeSpot").value = "pre";
@@ -2534,6 +2885,7 @@ document.getElementById("linso52").click();
 document.getElementById("linso61").click();
 Player.zeldas_letter = true;
 
+showNewPatchNotes();
 linsoControl(); linsoControl();
 setInterval(slowUpdate,3000);
 setInterval(midUpdate,500);

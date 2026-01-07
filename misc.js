@@ -203,9 +203,19 @@ function highlightDungeonEntrance(element) {
 	idx = parseInt(element.dataset.idx, 10);
 	if (Number.isNaN(idx) || idx < 0 || idx >= dungs_colors.length) return;
 
-	new_color = dungs_colors[idx] == "white" ? "yellow" : "white";
-	dungs_colors[idx] = new_color;
-	element.style.color = new_color;
+	if (event.button == 0) {  // left click
+		// If strike-though, don't bother changing color.
+		if (dungs_strike[idx] == "line-through") return;
+
+		new_color = dungs_colors[idx] == "white" ? "yellow" : "white";
+		dungs_colors[idx] = new_color;
+		element.style.color = new_color;
+	} if (event.button == 2) {  // right click
+		strike = dungs_strike[idx] == "none" ? "line-through" : "none";
+		dungs_strike[idx] = strike;
+		element.style.textDecoration = strike;
+		element.style.color = strike == "none" ? dungs_colors[idx] : "gray";
+	}
 }
 
 function shuffle(array) {
@@ -305,6 +315,46 @@ function whoAmI() {
 function altThemeControl() {
 	if (colorTheme == "dark") {colorTheme = "light"; localStorage.setItem("theme", colorTheme); document.getElementById("altThemeControl").innerHTML = "Light Theme";}
 	else {colorTheme = "dark"; localStorage.setItem("theme", colorTheme); document.getElementById("altThemeControl").innerHTML = "Dark Theme";}
+}
+
+function wothSizeToggle() {
+	button = document.getElementById("wothSizeToggle");
+
+	isBig = document.getElementById("woth_info").classList.toggle("big");
+	if (isBig) {
+		button.textContent = "Small WotH Font";
+		localStorage.setItem("wothSize", "big");
+	} else {
+		button.textContent = "Large WotH Font";
+		localStorage.setItem("wothSize", "small");
+	}
+}
+
+function areaTitlesToggle() {
+	// This assumes all titles are in the same state; either all hidden or all visible.
+	columns = ["normalColumn1", "normalColumn2", "normalColumn3"];
+	columns.forEach(columnStr => {
+		column = document.getElementById(columnStr);
+		area_titles = column.querySelectorAll(".area_titles");
+		area_titles.forEach(element => {
+			element.classList.toggle("hidden");
+		});
+
+		area_titles_breaks = column.querySelectorAll(".area_titles_break");
+		area_titles_breaks.forEach(element => {
+			element.classList.toggle("hidden");
+		});
+	})
+
+	button = document.getElementById("areaTitlesToggle");
+	isHidden = document.getElementById("title_kokiri").classList.contains("hidden");
+	if (isHidden) {
+		button.textContent = "Show Location Headers";
+		localStorage.setItem("showAreaTitles", "false");
+	} else {
+		button.textContent = "Hide Location Headers";
+		localStorage.setItem("showAreaTitles", "true");
+	}
 }
 	
 function identifyMedal(x) {
@@ -955,18 +1005,22 @@ document.onkeydown = function(e) {
 
 document.body.onmousedown = function(e) { if (e.button === 1) return false; }
 
-function refreshVersion() {
-	var version = 51;
-	viewedNewVersion = 10000000000000000;
-	var elements = document.getElementsByClassName('patchNotes');
-	var currentVersion = parseInt(elements[0].id.substring(2))+ 1;
-	if (localStorage.getItem("version")) {version = localStorage.getItem("version");}
-	if (version<currentVersion) {if (localStorage.getItem("viewedNewVersion")) {viewedNewVersion = localStorage.getItem("viewedNewVersion")} else{localStorage.setItem("viewedNewVersion",Date.now());}}
-	for (var i = version; i < currentVersion; i++) {
-        document.getElementById("pn" + i).style.display = "inline-block";
-        document.getElementById("patchNotesTitle").style.display = "inline-block";
+// For returning users, automatically show patch notes on initialize when a new version is available.
+function showNewPatchNotes() {
+	const patchNotesModal = document.getElementById('patchNotesModal');
+	const currentVersion = parseInt(patchNotesModal.dataset.version);
+
+	// Don't force patch notes to pop up for new user.
+	if (!localStorage.getItem("version")) {
+		localStorage.setItem("version", currentVersion);
+		return;
 	}
-	if (Date.now()-viewedNewVersion > 1000*60*60*6) {localStorage.setItem("version",currentVersion); localStorage.removeItem("viewedNewVersion");}
+	
+	const userVersion =  localStorage.getItem("version");
+	if (userVersion < currentVersion) {
+  		patchNotesModal.style.display = "block";
+		localStorage.setItem("version", currentVersion);
+	}
 }
 
 function sleep(milliseconds) {

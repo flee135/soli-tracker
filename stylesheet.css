@@ -261,6 +261,11 @@ color: red;
 	margin-top: 2px;
 	margin-right:4px;
 }
+.medallions.small {
+	height:14px;
+	width:14px;
+	margin-bottom: 0px;
+}
 #stonePic {
 	height:25px;
 	width:25px;
@@ -343,6 +348,15 @@ color: red;
 		1px -1px 0 #000,
 		-1px 1px 0 #000,
 		1px 1px 0 #000;
+}
+.area_titles.hidden {
+	display: none;
+}
+.area_titles_break {
+	line-height: 150%;
+}
+.area_titles_break.hidden {
+	display: none;
 }
 .column {
 	margin-top:10px;
@@ -1067,6 +1081,10 @@ color: red;
 	text-align:top;
 	left: 830px;
 	height: 325px;
+	font-size: 16px;
+}
+#woth_info.big {
+	font-size: 24px;
 }
 #scrollable_section {
 	overflow-x: hidden;
@@ -1081,8 +1099,8 @@ color: red;
 	font-size: 14px;
 	font-style: italic;
 }
-.woth_info_title {
-	font-size: 24px;
+#woth_info .woth_info_title {
+	font-size: inherit;
 }
 .path_arrow {
 	color:#FFFFFF;
@@ -1492,9 +1510,6 @@ color:#FE8B08;
 }
 .half_break {
 	line-height: 50%;
-}
-.big_break {
-	line-height: 150%;
 }
 .settingsOptions {
 	font-size: 1.1em;
