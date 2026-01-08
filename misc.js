@@ -245,57 +245,88 @@ function changeTheme() {
 	}
 function trackAnimalQuest() {
 	questCounter += 1;
+  document.getElementById("quest1").disabled = true;
+  if (lastCheck[lastCheck.length-1].startsWith("forest_")) forestItems+=1;
   
-    if (Player.nocturne && Math.random() < Math.min(rolledAnimalsLevel/200,0.125) && !yamiFailFlag) {
-      document.getElementById("linso54").style.filter = "brightness(1.5) invert(100%)"; 
-      yamiFlag = true;
-    }
-    else if (Player.nocturne) {
-      yamiFailFlag = true;
-    }
+  if (forestItems >= 4
+  && !quest1Flag
+  && document.getElementById("quest1").style.display != "none"
+  && document.getElementById("quest1").value == "4ForestItems") {
+    quest1Flag = true;
+    if (!simActive) quest1Mults[animalRNG] += 0.21;
+    else quest1Mults[animalRNG] += 0.21/4;
+    localStorage.setItem("quest1Mults", JSON.stringify(quest1Mults));
+  }
+  
+  if (Player.slingshot
+  && !Player.bomb_bag 
+  && !quest1Flag
+  && document.getElementById("quest1").style.display != "none"
+  && document.getElementById("quest1").value == "slingshotBeforeBombbag") {
+    quest1Flag = true;
+    if (!simActive) quest1Mults[animalRNG] += 0.07;
+    else quest1Mults[animalRNG] += 0.07/4;
+    localStorage.setItem("quest1Mults", JSON.stringify(quest1Mults));
+  }
+  
+  if (Player.bomb_bag3
+  && Player.slingshot3
+  && !quest1Flag
+  && document.getElementById("quest1").style.display != "none"
+  && document.getElementById("quest1").value == "3BombbagsAnd3Slingshots") {
+    quest1Flag = true;
+    if (!simActive) quest1Mults[animalRNG] += 0.14;
+    else quest1Mults[animalRNG] += 0.14/4;
+    localStorage.setItem("quest1Mults", JSON.stringify(quest1Mults));
+  }
+  
+  if (Player.nocturne && Math.random() < Math.min(rolledAnimalsLevel/200,0.125) && !yamiFailFlag) {
+    document.getElementById("linso54").style.filter = "brightness(1.5) invert(100%)"; 
+    yamiFlag = true;
+  }
+  else if (Player.nocturne) {
+    yamiFailFlag = true;
+  }
+  
+  if (Player.requiem && Math.random() < Math.min(rolledAnimalsLevel/200,0.125) && !angelFailFlag) {
+    angelFlag = true;
+    document.getElementById('halo').style.opacity = 1;
+  }
+  else if (Player.requiem) {
+    angelFailFlag = true;
+  }
     
-    if (Player.requiem && Math.random() < Math.min(rolledAnimalsLevel/200,0.125) && !angelFailFlag) {
-      angelFlag = true;
-      document.getElementById('halo').style.opacity = 1;
-    }
-    else if (Player.requiem) {
-      angelFailFlag = true;
-    }
+	if (questCounter >= 20) {     
+    if (simActive && document.getElementById("simSeed").value > 0) document.getElementById("simSeed").value =  parseInt(document.getElementById("simSeed").value) + 1;
     
-	if (questCounter >= 20) {
-        
-        if (simActive && document.getElementById("simSeed").value > 0) document.getElementById("simSeed").value =  parseInt(document.getElementById("simSeed").value) + 1;
 		if (!simActive) savedAnimalXP[animalRNG] += 1;
-        else savedAnimalXP[animalRNG] += 0.25;
+    else savedAnimalXP[animalRNG] += 0.25;
 		questCounter = -100000
 		localStorage.setItem("animalXP", JSON.stringify(savedAnimalXP));
-		console.log(savedAnimalXP)
 	}
-    if (questCounter <-9000 && yamiFlag && !yamiFlagFlag) {
-        if (!simActive) yamiMults[animalRNG] += 0.2;
-        else yamiMults[animalRNG] += 0.2/4;
-        console.log(yamiMults)
-        yamiFlagFlag = true;
-        yamiMults[animalRNG] = parseFloat(yamiMults[animalRNG].toFixed(1))
-        localStorage.setItem("yamiMults", JSON.stringify(yamiMults));
-    }
-    
-    if (questCounter <-9000 && angelFlag && !angelFlagFlag) {
-        if (!simActive) angelMults[animalRNG] += 0.2;
-        else angelMults[animalRNG] += 0.2/4;
-        console.log(angelMults)
-        angelFlagFlag = true;
-        angelMults[animalRNG] = parseFloat(angelMults[animalRNG].toFixed(1))
-        localStorage.setItem("angelMults", JSON.stringify(angelMults));
-    }
-    
-    if (questCounter <-9000 && rainbowFlag && !rainbowFlagFlag) {
-        if (!simActive) rainbowMults[animalRNG] += 1;
-        else rainbowMults[animalRNG] += 1/4;
-        console.log(rainbowMults)
-        rainbowFlagFlag = true;
-        localStorage.setItem("rainbowMults", JSON.stringify(rainbowMults));
-    }
+  
+  if (questCounter <-9000 && yamiFlag && !yamiFlagFlag) {
+    if (!simActive) yamiMults[animalRNG] += 0.2;
+    else yamiMults[animalRNG] += 0.2/4;
+    yamiFlagFlag = true;
+    yamiMults[animalRNG] = parseFloat(yamiMults[animalRNG].toFixed(1))
+    localStorage.setItem("yamiMults", JSON.stringify(yamiMults));
+  }
+  
+  if (questCounter <-9000 && angelFlag && !angelFlagFlag) {
+    if (!simActive) angelMults[animalRNG] += 0.2;
+    else angelMults[animalRNG] += 0.2/4;
+    angelFlagFlag = true;
+    angelMults[animalRNG] = parseFloat(angelMults[animalRNG].toFixed(1))
+    localStorage.setItem("angelMults", JSON.stringify(angelMults));
+  }
+  
+  if (questCounter <-9000 && rainbowFlag && !rainbowFlagFlag) {
+    if (!simActive) rainbowMults[animalRNG] += 1;
+    else rainbowMults[animalRNG] += 1/4;
+    rainbowFlagFlag = true;
+    localStorage.setItem("rainbowMults", JSON.stringify(rainbowMults));
+  }
 }	
 function whoAmI() {
 	if(Person.type == "soli") {
@@ -461,8 +492,7 @@ function colorWothAreasControl() {
 
 function hamsdaToggle() {
 	hamsda = !hamsda;
-	localStorage.setItem("hamsda", hamsda); 
-	console.log(hamsda)
+	localStorage.setItem("hamsda", hamsda);
 	if (!hamsda)
 		document.getElementById("hamsdaToggle").innerHTML = "Enable Hamsda Tracking"; 
 	else
@@ -554,7 +584,9 @@ function saveStuff() {
 	localStorage.setItem("erOption", document.getElementById("erOption").value);
 	localStorage.setItem("FAE_option", document.getElementById("FAE_option").value);
 	localStorage.setItem("hints_type", document.getElementById("hints_type").value);
-    localStorage.setItem("simSeed", document.getElementById("simSeed").value);
+  localStorage.setItem("simSeed", document.getElementById("simSeed").value);
+  localStorage.setItem("desiredAnimal", document.getElementById("desiredAnimal").value);
+  localStorage.setItem("quest1", document.getElementById("quest1").value);
 	localStorage.setItem("highlightWoths", colorWothAreas);
 }
 
@@ -566,6 +598,8 @@ function linsoControl() {
 		document.getElementById("soli_woth_info").appendChild(document.getElementById("woth_info")); 
 		document.getElementById("woth_info").style.top = "560px"; document.getElementById("woth_info").style.marginLeft = "0px";
 		document.getElementById("confirmed_logically_required").style.top = "850px"; document.getElementById("confirmed_logically_required").style.left = "735px";
+    document.getElementById("checkSummaryColumn2").style.top = "-320px"; document.getElementById("checkSummaryColumn2").style.left = "250px";
+    
 	}
 	else {
 		linso = true; 
@@ -574,6 +608,7 @@ function linsoControl() {
 		document.getElementById("linsoColumn").appendChild(document.getElementById("woth_info")); 
 		document.getElementById("woth_info").style.top = "400px"; document.getElementById("woth_info").style.marginLeft = "3px";
 		document.getElementById("confirmed_logically_required").style.top = "730px"; document.getElementById("confirmed_logically_required").style.left = "970px";
+    document.getElementById("checkSummaryColumn2").style.top = "0px"; document.getElementById("checkSummaryColumn2").style.left = "0px";
 	}
 }
 

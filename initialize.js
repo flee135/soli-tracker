@@ -60,6 +60,8 @@ var rainbowFlagFlag = false;
 var yamiFailFlag = false;
 var yamiFlag = false;
 var yamiFlagFlag = false;
+var quest1Flag = false;
+var forestItems = 0;
 var angelFailFlag = false;
 var angelFlag = false;
 var angelFlagFlag = false;
@@ -121,6 +123,8 @@ if (localStorage.getItem("FAE_option")) {document.getElementById("FAE_option").v
 if (document.getElementById("presets").value == "SGL_2025") {songItemChecked = false;}
 if (document.getElementById("presets").value == "SGL_2025")
 	document.getElementById("markMedallions").value = "Y-frR-B-P-O-";
+
+
 		
 var hintStones = ["Crater: Hint", "Crater: Gr. Hint", "Trail: Gr. Hint", "Trail: Bigo Hint", "Colossus: Hint", "Dodongos: Hint", "Field: Open Gr. Hint", "Field: Remote Gr. Hint", "Field: Destiny Hint", "Valley: Hint", "Hylia: After Valley Hint", "Hylia: Back Right Hint", "Hylia: Back Left Hint", "Hyrule Castle: First Hint", "Hyrule Castle: Second Hint", "Temple of Time: First Hint", "Temple of Time: Second Hint", "Temple of Time: Third Hint", "Temple of Time: Fourth Hint", "Kakariko: Gr. Hint", "Kokiri: Left Deku Hint", "Kokiri: Right Deku Hint", "Kokiri: Gr. Hint", "Kokiri: LW Hint", "Lost Woods: Br. Hint", "Lost Woods: Gr. Hint", "SFM: Sarias Hint", "SFM: Maze 1 Hint", "SFM: Maze 2 Hint", "River: Gr. Hint", "River: Plateau Hint", "River: By ZD Hint", "Domain: Hint", "Fountain: Jabu Hint", "Fountain: By Fairy Hint", "Goron City: Maze Hint", "Goron City: Medigoron Hint", "Graveyard: Hint", "Hyrule Castle: Storms Hint", "Field: Hammer Hint"];
 
@@ -551,17 +555,28 @@ document.getElementById("stonePic").src = dungIconSources[Math.floor(Math.random
 document.getElementById("medallionPic").src = dungIconSources[Math.floor(Math.random() * 6)+3];
 var tabPicSources = ["./tab_pics/circus_tent.png", "./tab_pics/camel.png", "./tab_pics/tiger.png", "./tab_pics/clown.png", "./tab_pics/elephant.png", "./tab_pics/leopard.png", "./tab_pics/rhino.png" , "./tab_pics/juggler.png", "./tab_pics/zebra.png", "./tab_pics/bear.png", "./tab_pics/crocodile.png", "./tab_pics/monkey.png", "./tab_pics/hippo.png", "./tab_pics/seal.png", "./tab_pics/llama.png", "./tab_pics/dog.png", "./tab_pics/horse.png", "./tab_pics/cat.png", "./tab_pics/kurama.png", "./tab_pics/merry.png", "./tab_pics/articuno.png"]
 var tabPicSourcesRB = ["./tab_pics/circus_tentRB.png", "./tab_pics/camelRB.png", "./tab_pics/tigerRB.png", "./tab_pics/clownRB.png", "./tab_pics/elephantRB.png", "./tab_pics/leopardRB.png", "./tab_pics/rhinoRB.png" , "./tab_pics/jugglerRB.png", "./tab_pics/zebraRB.png", "./tab_pics/bearRB.png", "./tab_pics/crocodileRB.png", "./tab_pics/monkeyRB.png", "./tab_pics/hippoRB.png", "./tab_pics/sealRB.png", "./tab_pics/llamaRB.png", "./tab_pics/dogRB.png", "./tab_pics/horseRB.png", "./tab_pics/catRB.png", "./tab_pics/kuramaRB.png", "./tab_pics/merryRB.png", "./tab_pics/articunoRB.png"]
-var numberOfAnimals = 18;
+var numberOfAnimals = tabPicSources.length;
 var animalXP = new Array(numberOfAnimals).fill(0);
 var savedAnimalXP = new Array(numberOfAnimals).fill(0);
+if (localStorage.getItem("quest1")) {document.getElementById("quest1").value= localStorage.getItem("quest1");}
 if (localStorage.getItem("animalXP")) {
     savedAnimalXP = JSON.parse(localStorage.getItem("animalXP"));
     for (var i = 0; i<savedAnimalXP.length; i++) {
-        if (savedAnimalXP[i]>1000) {savedAnimalXP[i] = 100;}
         savedAnimalXP[i] = Math.floor(savedAnimalXP[i]);
         animalXP[i] = savedAnimalXP[i];
     }
 }
+var quest1Mults = new Array(numberOfAnimals).fill(1);
+if (localStorage.getItem("quest1Mults")) {
+    savedQuest1Mults = JSON.parse(localStorage.getItem("quest1Mults"));
+    for (var i = 0; i<savedQuest1Mults.length; i++) {
+        quest1Mults[i] = savedQuest1Mults[i];
+    }
+}
+for (var i = 0; i < animalXP.length; i++) {
+    animalXP[i] *= quest1Mults[i];
+}
+
 var yamiMults = new Array(numberOfAnimals).fill(1);
 if (localStorage.getItem("yamiMults")) {
     savedYamiMults = JSON.parse(localStorage.getItem("yamiMults"));
@@ -1769,17 +1784,31 @@ if (i == 5) {tempTop += 9;} if (i == 9) {tempTop += 5;} if (i == 10) {tempTop -=
 		else if (linsoOrder[linsoOrderIncrement].startsWith("circus")) {
       animalID = elem.id;
 			animalLV = animalXP.slice(0);
-            highestXPAnimals=Object.keys(myAnimalXP).sort(function(a, b) {return -(myAnimalXP[a] - myAnimalXP[b])});
-            for (var n = 0; n < highestXPAnimals.length; n++) {
-                thisAnimalsLevel = Math.max(Math.floor(2.5*Math.sqrt(myAnimalXP[highestXPAnimals[n]])-1),0);
-                for (var m = 0; m < thisAnimalsLevel; m++) {
-                    if (Math.random() < 0.5) {
-                        if (tabPicSources[animalRNG].includes(highestXPAnimals[n])) {n=1000000000; m=1000000000}
-                        else animalRNG = Math.floor(Math.random() * tabPicSources.length)
-                    }
-                }
-            }
-      rolledAnimalsLevel = Math.max(Math.floor(2.5*Math.sqrt(animalXP[animalRNG])-1),0);     
+      highestXPAnimals=Object.keys(myAnimalXP).sort(function(a, b) {return -(myAnimalXP[a] - myAnimalXP[b])});
+      for (var n = 0; n < highestXPAnimals.length; n++) {
+        document.getElementById('desiredAnimal').innerHTML+='<option value="'+highestXPAnimals[n]+'">'+highestXPAnimals[n].replace("_"," ")+'</option>'
+      }
+      if (localStorage.getItem("desiredAnimal")) {document.getElementById("desiredAnimal").value= localStorage.getItem("desiredAnimal");}
+      if (document.getElementById('desiredAnimal').value != 'random') {
+        highestXPAnimals.splice(highestXPAnimals.indexOf(document.getElementById('desiredAnimal').value), 1);
+        highestXPAnimals.unshift(document.getElementById('desiredAnimal').value);
+      }
+      
+      for (var n = 0; n < highestXPAnimals.length; n++) {
+          thisAnimalsLevel = Math.max(Math.floor(2.5*Math.sqrt(myAnimalXP[highestXPAnimals[n]])-1),0);
+          if (document.getElementById('desiredAnimal').value == highestXPAnimals[n]) thisAnimalsLevel += 2;
+          for (var m = 0; m < thisAnimalsLevel; m++) {
+              if (Math.random() < 0.5) {
+                  if (tabPicSources[animalRNG].includes(highestXPAnimals[n])) {n=1000000000; m=1000000000}
+                  else animalRNG = Math.floor(Math.random() * tabPicSources.length)
+              }
+          }
+      }
+      rolledAnimalsLevel = Math.max(Math.floor(2.5*Math.sqrt(animalXP[animalRNG])-1),0);   
+      if (rolledAnimalsLevel >= 5) {
+        document.getElementById("quest1Label").style.display = "inline-block";
+        document.getElementById("quest1").style.display = "inline-block";
+      }
             
 			elem.src = tabPicSources[animalRNG]; 
       elem.onclick = toggleLinsoGoMode;
@@ -1794,12 +1823,13 @@ if (i == 5) {tempTop += 9;} if (i == 9) {tempTop += 5;} if (i == 10) {tempTop -=
       document.getElementById("yamiChance").innerHTML =  'yami aminalution: ' + (Math.min(rolledAnimalsLevel/200,0.125)*100).toFixed(1) + '%'; 
       document.getElementById("yamiMult").innerHTML =  'yami XP multiplier: ' + yamiMults[animalRNG]; 
       document.getElementById("angelChance").innerHTML =  'angel aminalution: ' + (Math.min(rolledAnimalsLevel/200,0.125)*100).toFixed(1) + '%'; 
-      document.getElementById("angelMult").innerHTML =  'angel XP multiplier: ' + angelMults[animalRNG];        
+      document.getElementById("angelMult").innerHTML =  'angel XP multiplier: ' + angelMults[animalRNG];     
+      document.getElementById("quest1Mult").innerHTML =  'quest 1 XP multiplier: ' + quest1Mults[animalRNG].toFixed(2); 
       
          
       
 			document.getElementById("animalLV").innerHTML = elem.src.slice(44,elem.src.length-4).replace("RB","") + " LVL " + rolledAnimalsLevel;
-            if (tabPicSources[animalRNG].includes(highestXPAnimals[0])) document.getElementById("rollChance").innerHTML += "roll chance:" + ((1-Math.pow((numberOfAnimals-1)/numberOfAnimals,rolledAnimalsLevel/2+1))*100).toFixed(1) + "%";
+            if (tabPicSources[animalRNG].includes(highestXPAnimals[0])) document.getElementById("rollChance").innerHTML += "roll chance:" + ((1-Math.pow((numberOfAnimals-1)/numberOfAnimals,(rolledAnimalsLevel+2)/2+1))*100).toFixed(1) + "%";
     }
 		else {elem.src = Player[linsoOrder[linsoOrderIncrement] + "_img"];}
 		Player[linsoOrder[linsoOrderIncrement]] = false;
@@ -1823,7 +1853,7 @@ if (i == 5) {tempTop += 9;} if (i == 9) {tempTop += 5;} if (i == 10) {tempTop -=
       
       var elem3 = document.createElement("IMG");
       elem3.style.position = "absolute";
-			elem3.style.left = -29 + j*41 + "px";
+			elem3.style.left = -28 + j*41 + "px";
 			elem3.style.top = tempTop -17 + i*40 + "px";
 			elem3.id = "halo";
 			elem3.src = "./normal/halo.png";
@@ -2517,6 +2547,9 @@ var SpoilerItemToInput = {
 	"Eyedrops" : inputs[inputNames.indexOf("Prescription")],
 	"Claim Check" : inputs[inputNames.indexOf("Claim Check")],
 	"Progressive Wallet" : inputs[inputNames.indexOf("Progressive Wallet")],
+	"Nayrus Love" : inputs[inputNames.indexOf("Nayrus Love")],
+	"Biggoron Sword" : inputs[inputNames.indexOf("BGS")],
+	"Stone of Agony" : inputs[inputNames.indexOf("Stone of Agony")],
 	"Zora Tunic" : inputs[inputNames.indexOf("Zora Tunic")],
 	"Zeldas Lullaby" : inputs[inputNames.indexOf("Lullaby")],
 	"Eponas Song" : inputs[inputNames.indexOf("Epona's Song")],
@@ -2855,7 +2888,7 @@ function popup() {
 document.documentElement.spellcheck = false;
 document.getElementById("hintInput").innerHTML = "30 \n40 \n50 \noot \nnoc \nbig \nfr2 \nmas \n";
 if (document.getElementById("presets").value == "S9") {
-	document.getElementById("hintInput").innerHTML = "30 \n40 \n50 \noot \nnoc \nbig \nfr2 \nmas \n\n2 dual:\n\n\n\n3 some:\n\n\n";
+	document.getElementById("hintInput").innerHTML = "30 \n40 \n50 \noot \nnoc \nbig \nfr2 \nmas \n\n2 dual:\n\n\n\n3 some:\n";
 }
 if (document.getElementById("presets").value == "SGL_2025") {
 	document.getElementById("hintInput").innerHTML = "20 \n30 \n40 x\n50 x\nnoc \nfr2 \nmas \nLIGHT precomp.\n3 dual: \n6 some: \n";
